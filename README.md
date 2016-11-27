@@ -82,3 +82,15 @@ export default class AwesomeProject extends Component {
 |-----------|-----------|----------------|---------------------------------------|
 | style     | object    | null           | To style each option                  |
 | styleText | object    | null           | To style the text shown in the option |
+
+
+
+## Demo
+#####  IOS and Android:
+<p align="center">
+    <img src ="https://raw.githubusercontent.com/gs-akhan/react-native-chooser/master/images/demo.gif" />
+</p>
+
+## Contributions
+Your contributions and suggestions are heartily♡ welcome. (✿◠‿◠)
+
