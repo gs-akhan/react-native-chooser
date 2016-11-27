@@ -63,7 +63,7 @@ export default class AwesomeProject extends Component {
 
 ### Props 
 
-## Props for <Select />
+### Props for Select
 
 | Prop Name       | Data Type | Default Values  | Description                                      |
 |-----------------|-----------|-----------------|--------------------------------------------------|
@@ -75,7 +75,7 @@ export default class AwesomeProject extends Component {
 | optionListStyle | object    | null            | To style the selection box                       |
 
 
-## Props for <Option />
+### Props for Option
 
 
 | Prop Name | Data Type | Default Values | Description                           |
