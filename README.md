@@ -1,4 +1,4 @@
-# React Native Selectme
+# React Native Chooser
 Simple DropDown menu for React Native App! Your Select Tag for React Native. Fully Customizable too. 
 
 ## Introduction
