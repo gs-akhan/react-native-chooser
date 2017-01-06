@@ -73,6 +73,8 @@ export default class AwesomeProject extends Component {
 | backdropStyle   | object    | null            | To style the overlay                             |
 | textStyle       | object    | null            | To style the text shown in the box               |
 | optionListStyle | object    | null            | To style the selection box                       |
+| transparent     | boolean   | false           | To set the transparent prop on Modal             |
+| animationType   | string    | "none"          | To set the animationType prop on Modal           |
 
 
 ### Props for Option
