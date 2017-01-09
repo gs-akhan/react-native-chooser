@@ -1,9 +1,9 @@
 # React Native Chooser
-Simple DropDown menu for React Native App! Your Select Tag for React Native. Fully Customizable too. 
+Simple DropDown menu for React Native App! Your Select Tag for React Native. Fully Customizable too.
 
 ## Introduction
 
-React Native Chooser is simple, customizable and easy to use dropdown in React Native. It has been tested on both Android and IOS and works like a charm. 
+React Native Chooser is simple, customizable and easy to use dropdown in React Native. It has been tested on both Android and IOS and works like a charm.
 
 ## Installation
 ```
@@ -35,7 +35,7 @@ export default class AwesomeProject extends Component {
     return (
       <View style={styles.container}>
         <Select
-            onSelect = {this.onSelect.bind(this)} 
+            onSelect = {this.onSelect.bind(this)}
             defaultText  = "Select Me Please"
             style = {{borderWidth : 1, borderColor : "green"}}
             textStyle = {{}}
@@ -61,7 +61,7 @@ export default class AwesomeProject extends Component {
 ```
 
 
-### Props 
+### Props
 
 ### Props for Select
 
@@ -75,6 +75,10 @@ export default class AwesomeProject extends Component {
 | optionListStyle | object    | null            | To style the selection box                       |
 | transparent     | boolean   | false           | To set the transparent prop on Modal             |
 | animationType   | string    | "none"          | To set the animationType prop on Modal           |
+| indicator       | string "none", "up" or "down" | "none" | To enable an indicator arrow          |
+| indicatorColor  | string    | "black"         | The color of the indicator arrow                 |
+| indicatorSize   | number    | 10              | The size of the indicator arrow                  |
+| indicatorStyle  | object    | null            | To style the indicator arrow                     |
 
 
 ### Props for Option
@@ -95,4 +99,3 @@ export default class AwesomeProject extends Component {
 
 ## Contributions
 Your contributions and suggestions are heartily♡ welcome. (✿◠‿◠)
-
