@@ -75,7 +75,7 @@ export default class AwesomeProject extends Component {
 | optionListStyle | object    | null            | To style the selection box                       |
 | transparent     | boolean   | false           | To set the transparent prop on Modal             |
 | animationType   | string    | "none"          | To set the animationType prop on Modal           |
-| indicator       | string "none", "up" or "down" | "none" | To enable an indicator arrow          |
+| indicator       | string    | "none", "up" or "down" | "none" | To enable an indicator arrow     |
 | indicatorColor  | string    | "black"         | The color of the indicator arrow                 |
 | indicatorSize   | number    | 10              | The size of the indicator arrow                  |
 | indicatorStyle  | object    | null            | To style the indicator arrow                     |
