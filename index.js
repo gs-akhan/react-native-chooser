@@ -1,7 +1,2 @@
-import Select from "./lib/select";
-import Option from "./lib/option";
-
-module.exports = {
-	Select : Select,
-	Option : Option
-};
+export { default as Select } from './lib/select'
+export { default as Option } from './lib/option'
