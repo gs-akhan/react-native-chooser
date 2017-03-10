@@ -83,6 +83,13 @@ export default class AwesomeProject extends Component {
 | selectedStyle   | object    | null            | Apply styles to the selected Option              |
 
 
+### Functions for Select
+
+
+| Function Name | Description |
+|-----------|-----------|
+| setSelectedText(text) | Set default text in the select option, often used to reset text.|
+
 ### Props for Option
 
 
