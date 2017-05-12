@@ -21,5 +21,13 @@
   "bugs": {
     "url": "https://github.com/gs-akhan/react-native-chooser/issues"
   },
-  "homepage": "https://github.com/gs-akhan/react-native-chooser#readme"
+  "homepage": "https://github.com/gs-akhan/react-native-chooser#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
