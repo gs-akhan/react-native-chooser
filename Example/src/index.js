@@ -13,17 +13,22 @@ export default class Example extends React.PureComponent {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          React Native Chooser Example
+          React Native Chooser
         </Text>
         <View style={styles.cooserContainer}>
           <Select
               onSelect = {this.onSelect}
-              defaultText  = "Select Me Please"
-              style = {{borderWidth : 1, borderColor : "green"}}
+              defaultText  = "Choose a name"
+              style = {{borderWidth : 1, borderColor : "#d3d5d6"}}
               textStyle = {{}}
               backdropStyle  = {{backgroundColor : "#d3d5d6"}}
               optionListStyle = {{backgroundColor : "#F5FCFF"}}
+              animationType={'fade'}
+              transparent={false}
+              direction={'fromLeft'}
+              renderButton={ currentValue => <Text>{'Current Value: ' + currentValue}</Text> }
             >
+            
             <Option value = {{name : "azhar"}}>Azhar</Option>
             <Option value = "johnceena">Johnceena</Option>
             <Option value = "undertaker">Undertaker</Option>
@@ -39,6 +44,7 @@ export default class Example extends React.PureComponent {
       </View>
     );
   }
+
   onSelect = e => {
     console.log(e)
   }
