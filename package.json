@@ -2,7 +2,7 @@
   "name": "react-native-chooser",
   "version": "1.5.2",
   "description": "Simple Cross platform SELECT tag for React-Native",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
