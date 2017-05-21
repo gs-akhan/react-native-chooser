@@ -1,18 +1,25 @@
 # React Native Chooser
-Simple DropDown menu for React Native App! Your Select Tag for React Native. Fully Customizable too.
+[![npm](https://img.shields.io/npm/dt/react-native-chooser.svg)]()
+[![npm](https://img.shields.io/npm/v/npm.svg)]()
+[![Travis](https://img.shields.io/travis/gs-akhan/react-native-chooser.svg)]()
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-## Introduction
-
-React Native Chooser is simple, customizable and easy to use dropdown in React Native. It has been tested on both Android and IOS and works like a charm.
+Simple yet fully customizable select menu for React Native.
+* **Simple:** Alot of optional inputs makes it easier to use as you only need to pass inn data for a simple version.
+* **Customizable:** All elements can be changed to you what you need. Custom components can be added.
+* **Standards:** Everything is after React`s latest standards.
+* **iOS and Android:** Supports both platforms out of the box.
 
 ## Installation
 ```
 npm i react-native-chooser --save
 ```
+or
+```
+yarn add react-native-chooser
+```
 
 ##Usage
-
-
 ```
 
 import React, { Component } from 'react';

@@ -27,6 +27,7 @@ export default class Example extends React.PureComponent {
               transparent={false}
               direction={'fromLeft'}
               renderButton={ currentValue => <Text>{'Current Value: ' + currentValue}</Text> }
+              renderOptionItem = { ({value, text, index}) => <View key={index}>{text}</View>}
             >
             
             <Option value = {{name : "azhar"}}>Azhar</Option>

@@ -2,17 +2,18 @@ import React, {Component} 	from "react"
 import {
 	View,
 	Text,
+	Modal,
+	Animated,
+	Dimensions,
 	StyleSheet,
 	TouchableWithoutFeedback,
-	Modal,
-	Dimensions
 } from "react-native"
 
-import OptionList from "./optionlist"
-import Indicator from "./indicator"
+import OptionList from "./Optionlist"
+import Indicator from "./Indicator"
 
-const window = Dimensions.get('window')
-
+var deviceHeight = Dimensions.get('window').height
+var deviceWidth = Dimensions.get('window').width
 
 export default class Select extends Component {
 	static defaultProps = {
@@ -34,20 +35,23 @@ export default class Select extends Component {
 		indicator : React.PropTypes.string,
 		indicatorColor : React.PropTypes.string,
 		indicatorSize : React.PropTypes.number,
-		indicatorStyle : View.propTypes.style
+		indicatorStyle : View.propTypes.style,
+		direction: 
 	}
 
+	state={
+  	modalVisible : false, 
+	  defaultText : this.props.defaultText, 
+	  selected : this.props.selected,
+	};
 
-	constructor(props) {
-	  super(props)
-	  this.selected = this.props.selected
-	  this.state = {
-	  	modalVisible : false, 
-		  defaultText : this.props.defaultText, 
-		  selected : this.props.selected,
-		}
-	}
+	selected = this.props.selected
+  left = (this.props.direction == 'fromLeft')? new Animated.Value(-deviceWidth): null
+  right = (this.props.direction == 'fromRight')? new Animated.Value(-deviceWidth): null
+  top = (this.props.direction == 'fromTop')? new Animated.Value(-deviceHeight): null
+  bottom = (this.props.direction == 'fromBottom')? new Animated.Value(-deviceHeight): null
 	
+
 	onSelect(label, value) {
 		this.props.onSelect(value)
 		this.setState({
@@ -56,10 +60,43 @@ export default class Select extends Component {
 		})
 	}
 
-	onClose() {
-		this.setState({
-			modalVisible: false
-		})
+	openModal = e => {
+		this.setState({ modalVisible: true })
+		switch(this.props.direction){
+			case 'fromLeft': 
+				Animated.timing(this.left, {toValue: 0, duration: 200}).start()
+				break
+			case 'fromRight': 
+				Animated.timing(this.right, {toValue: 0}).start()
+				break
+			case 'fromTop': 
+				Animated.timing(this.top, {toValue: 0}).start()
+				break
+			case 'fromBottom': 
+				Animated.timing(this.bottom, {toValue: 0}).start()
+				break
+		}
+	}
+
+	closeModal = e => {
+		switch(this.props.direction){
+			case 'fromLeft': 
+					Animated.timing(this.left, {toValue: -deviceWidth}).start()
+					setTimeout( () => this.setState({ modalVisible: false }), 500)
+				break
+			case 'fromRight': 
+				Animated.timing(this.right, {toValue: -deviceWidth}).start()
+					setTimeout( () => this.setState({ modalVisible: false }), 500)
+				break
+			case 'fromTop': 
+				Animated.timing(this.top, {toValue: -deviceHeight}).start()
+					setTimeout( () => this.setState({ modalVisible: false }), 500)
+				break
+			case 'fromBottom': 
+				Animated.timing(this.bottom, {toValue: -deviceHeight}).start()
+					setTimeout( () => this.setState({ modalVisible: false }), 500)
+				break
+		}
 	}
 
 	render() {
@@ -70,55 +107,50 @@ export default class Select extends Component {
 
 		return (
 			<View>
-				<TouchableWithoutFeedback onPress = {this.onPress.bind(this)}>
+				<TouchableWithoutFeedback onPress={this.openModal}>
+				{
+					(this.props.renderButton)?
+					<View>
+						{this.props.renderButton(this.state.defaultText)}
+					</View>:
 					<View style = {[styles.selectBox, style]}>
 						<View style={styles.selectBoxContent}>
 							<Text style = {textStyle}>{this.state.defaultText}</Text>
 							<Indicator direction={indicator} color={indicatorColor} size={indicatorSize} style={indicatorStyle} />
 						</View>
 					</View>
+				}
 				</TouchableWithoutFeedback>
 
 				<Modal
-					transparent={transparent}
-					animationType={animationType}
-					visible={this.state.modalVisible}
-					onRequestClose={this.onClose.bind(this)}
-			  	>
-				 <TouchableWithoutFeedback onPress ={this.onModalPress.bind(this)}>
-					<View style={[styles.modalOverlay, backdropStyle]}>
-						<OptionList
-							onSelect = {this.onSelect.bind(this)}
-							selectedStyle = {selectedStyle}
-							selected = {selected}
-							style = {[optionListStyle]}>
-							{this.props.children}
-						</OptionList>
-					</View>
-				 </TouchableWithoutFeedback>
-
+          animationType={"none"}
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={this.closeModal}
+          >
+					<Animated.View style={[styles.modal,{
+						left: this.left,
+						right: this.right,
+						top: this.top,
+						bottom: this.bottom,
+					}]}>
+						<TouchableWithoutFeedback onPress={this.closeModal}>
+							<View style={[styles.modalOverlay, backdropStyle]}>
+								<OptionList
+								onSelect = {this.onSelect.bind(this)}
+								selectedStyle = {selectedStyle}
+								selected = {selected}
+								style = {[optionListStyle]}
+								>
+									{this.props.children}
+								</OptionList>
+							</View>
+						</TouchableWithoutFeedback>
+					</Animated.View>
 				</Modal>
+
 			</View>
 		)
-	}
-	/*
-		Fired when user clicks the button
-	 */
-	onPress() {
-		this.setState({
-			modalVisible : !this.state.modalVisible
-		})
-	}
-
-	/*
-	 Fires when user clicks on modal. primarily used to close
-	 the select box
-	 */
-
-	onModalPress() {
-		this.setState({
-			modalVisible : false
-		})
 	}
 
 	setSelectedText(text){
@@ -145,6 +177,11 @@ var styles = StyleSheet.create({
 		justifyContent : "center",
 		alignItems : "center",
 		width: window.width,
-    	height: window.height
+    height: window.height
+	},
+	modal:{
+		position: 'absolute',
+		height: deviceHeight,
+		width: deviceWidth,
 	}
 })
