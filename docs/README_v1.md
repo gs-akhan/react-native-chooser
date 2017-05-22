@@ -1,6 +1,6 @@
 # React Native Chooser
 [![npm](https://img.shields.io/npm/dt/react-native-chooser.svg)]()
-[![npm](https://img.shields.io/npm/v/npm.svg)](aha)
+[![npm](https://img.shields.io/npm/v/npm.svg)]()
 [![Travis](https://img.shields.io/travis/gs-akhan/react-native-chooser.svg)]()
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
@@ -9,13 +9,6 @@ Simple yet fully customizable select menu for React Native.
 * **Customizable:** All elements can be changed to you what you need. Custom components can be added.
 * **Standards:** Everything is after React`s latest standards.
 * **iOS and Android:** Supports both platforms out of the box.
-
-___PLEASE NOTE: BREAKING CHANGES IN V2.___
-
-[Version 1 documentation here](blob/v2/docs/README_v1.md)
-
-[Migration from v1 to v2 here](blob/v2/docs/MIGRATION.md)
-
 
 ## Installation
 ```

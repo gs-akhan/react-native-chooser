@@ -6,7 +6,7 @@ import {
   View
 } from 'react-native'
 
-import {Select, Option} from "./react-native-chooser"
+import {Select} from "react-native-chooser"
 
 export default class Example extends React.PureComponent {
   render() {
@@ -15,17 +15,13 @@ export default class Example extends React.PureComponent {
         <Text style={styles.title}>
           React Native Chooser
         </Text>
+
         <View style={styles.cooserContainer}>
           <Select
-              onSelect = {this.onSelect}
-              defaultValue  = "Choose a name"
-              style = {{borderWidth : 1, borderColor : "#d3d5d6"}}
-              textStyle = {{}}
-              backdropStyle  = {{backgroundColor : "#d3d5d6"}}
-              optionListStyle = {{backgroundColor : "#F5FCFF"}}
-              animationType={'fade'}
-              transparent={false}
+              onSelect={this.onSelect}
+              defaultValue="Choose a name"
               direction={'fromLeft'}
+              multiSelect={true}
               data={[
                 {value: 'Motive', link: 'www.Motive.com'},
                 {value: 'Presence', link: 'www.Presence.com'},
@@ -40,16 +36,16 @@ export default class Example extends React.PureComponent {
               ]}
             >
           </Select>
+
         </View>
       </View>
     );
   }
-
   onSelect = e => {
+    console.log('Selected value(s) are:')
     console.log(e)
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

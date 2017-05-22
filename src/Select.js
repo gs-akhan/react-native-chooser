@@ -21,13 +21,18 @@ export default class Select extends React.PureComponent {
 	 * Type Checking
 	 */
 	static propTypes = {
-		defaultValue : PropTypes.string,
-		onSelect : PropTypes.func,
-		indicator : PropTypes.string,
-		indicatorColor : PropTypes.string,
-		indicatorSize : PropTypes.number,
-		indicatorStyle : PropTypes.object,
-		backgroundStyle : PropTypes.object,
+		indicator: PropTypes.string,
+		indicatorColor: PropTypes.string,
+		indicatorSize: PropTypes.number,
+		indicatorStyle: PropTypes.object,
+		
+		//Settings
+		defaultValue: PropTypes.string,
+		onSelect: PropTypes.func,
+		multiSelect: PropTypes.bool,
+		
+		//styles
+		backgroundStyle: PropTypes.object,
 		
 		//Animation
 		direction: PropTypes.string,
@@ -44,6 +49,7 @@ export default class Select extends React.PureComponent {
 	static defaultProps = {
 	  defaultValue : 'Click To Select',
 	  onSelect  : () => {},
+	  multiSelect  : false,
 		indicator : 'none',
 		indicatorColor: 'black',
 		indicatorSize: 10,
@@ -58,7 +64,7 @@ export default class Select extends React.PureComponent {
 	state = {
   	modalVisible: false, 
 	  selectedValue: this.props.defaultValue,
-	  selected: {},
+	  selected: null,
 	};
 
 
@@ -137,14 +143,30 @@ export default class Select extends React.PureComponent {
 	 * @param  {integer} index [integer that defines what data[index] that has the option]
 	 */
 	_optionPress(index){
-		// Todo add multiple options
-
+		console.log(index)
 		let pressedVal = this.props.data[index]
-		if (pressedVal.value !== undefined) 
-			this.setState({selectedValue: pressedVal.value})
-		this.setState({selected: pressedVal})
-		this.props.onSelect(pressedVal)
-		this.closeModal()
+
+		//handle multiselect
+		let items = []
+		if (this.props.multiSelect){
+			if (this.state.selected == null){
+				items.push(pressedVal)
+			}else{
+				items = this.state.selected
+				if (items.indexOf(pressedVal) == -1)
+					items.push(pressedVal)
+				else
+					items.splice(items.indexOf(pressedVal), 1)
+			}
+			this.setState({selected: items})
+			this.props.onSelect(items)
+		}else{
+			if (pressedVal.value !== undefined) 
+				this.setState({selectedValue: pressedVal.value})
+			this.setState({selected: pressedVal})
+			this.props.onSelect(this.state.selected)
+			this.closeModal()
+		}
 	}
 
 	/**
@@ -245,8 +267,8 @@ export default class Select extends React.PureComponent {
 	 */
 	reset(){
 		this.setState({
-			selectedValue: pressedVal.value,
-			selected: pressedVal,
+			selectedValue: this.props.defaultValue,
+			selected: null,
 		})
 	}
 
