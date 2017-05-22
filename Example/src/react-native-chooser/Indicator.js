@@ -7,6 +7,7 @@ import {
   Modal,
   Dimensions
 } from 'react-native'
+import PropTypes from 'prop-types'
 
 export default Indicator = function({
   direction,
@@ -47,8 +48,8 @@ const getStyles = function(size, color) {
 }
 
 Indicator.propTypes = {
-  direction : React.PropTypes.string,
-  size : React.PropTypes.number.isRequired,
-  color : React.PropTypes.string.isRequired,
-	style : View.propTypes.style
+  direction : PropTypes.string,
+  size : PropTypes.number.isRequired,
+  color : PropTypes.string.isRequired,
+	style : PropTypes.object
 }

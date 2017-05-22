@@ -18,7 +18,7 @@ export default class Example extends React.PureComponent {
         <View style={styles.cooserContainer}>
           <Select
               onSelect = {this.onSelect}
-              defaultText  = "Choose a name"
+              defaultValue  = "Choose a name"
               style = {{borderWidth : 1, borderColor : "#d3d5d6"}}
               textStyle = {{}}
               backdropStyle  = {{backgroundColor : "#d3d5d6"}}
@@ -26,20 +26,19 @@ export default class Example extends React.PureComponent {
               animationType={'fade'}
               transparent={false}
               direction={'fromLeft'}
-              renderButton={ currentValue => <Text>{'Current Value: ' + currentValue}</Text> }
-              renderOptionItem = { ({value, text, index}) => <View key={index}>{text}</View>}
+              data={[
+                {value: 'Motive', link: 'www.Motive.com'},
+                {value: 'Presence', link: 'www.Presence.com'},
+                {value: 'Bliss', link: 'www.Bliss.com'},
+                {value: 'Heirloom', link: 'www.Heirloom.com'},
+                {value: 'Utopia', link: 'www.Utopia.com'},
+                {value: 'Corsair', link: 'www.Corsair.com'},
+                {value: 'Mammoth', link: 'www.Mammoth.com'},
+                {value: 'Warrior', link: 'www.Warrior.com'},
+                {value: 'Scorpion', link: 'www.Scorpion.com'},
+                {value: 'Corsair', link: 'www.Corsair.com'},
+              ]}
             >
-            
-            <Option value = {{name : "azhar"}}>Azhar</Option>
-            <Option value = "johnceena">Johnceena</Option>
-            <Option value = "undertaker">Undertaker</Option>
-            <Option value = "Daniel">Daniel</Option>
-            <Option value = "Roman">Roman</Option>
-            <Option value = "Stonecold">Stonecold</Option>
-            <Option value = "Rock">Rock</Option>
-            <Option value = "Sheild">Sheild</Option>
-            <Option value = "Orton">Orton</Option>
-
           </Select>
         </View>
       </View>

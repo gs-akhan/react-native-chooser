@@ -1,4 +1,4 @@
-import React, {Component} 	from "react"
+import React 	from 'react'
 import {
 	View,
 	Text,
@@ -6,124 +6,216 @@ import {
 	Animated,
 	Dimensions,
 	StyleSheet,
+	ScrollView,
 	TouchableWithoutFeedback,
-} from "react-native"
+} from 'react-native'
 
-import OptionList from "./Optionlist"
-import Indicator from "./Indicator"
+import PropTypes from 'prop-types'
 
 var deviceHeight = Dimensions.get('window').height
 var deviceWidth = Dimensions.get('window').width
 
-export default class Select extends Component {
-	static defaultProps = {
-	  defaultText : "Click To Select",
-	  onSelect  : () => {},
-		transparent : false,
-		animationType : "none",
-		indicator : "none",
-		indicatorColor: "black",
-		indicatorSize: 10
-	}
-	static propTypes = {
-		style : View.propTypes.style,
-		defaultText : React.PropTypes.string,
-		onSelect : React.PropTypes.func,
-		textStyle : Text.propTypes.style,
-		backdropStyle : View.propTypes.style,
-		optionListStyle : View.propTypes.style,
-		indicator : React.PropTypes.string,
-		indicatorColor : React.PropTypes.string,
-		indicatorSize : React.PropTypes.number,
-		indicatorStyle : View.propTypes.style,
-		direction: 
-	}
+export default class Select extends React.PureComponent {
 
-	state={
-  	modalVisible : false, 
-	  defaultText : this.props.defaultText, 
-	  selected : this.props.selected,
+	/**
+	 * Type Checking
+	 */
+	static propTypes = {
+		defaultValue : PropTypes.string,
+		onSelect : PropTypes.func,
+		indicator : PropTypes.string,
+		indicatorColor : PropTypes.string,
+		indicatorSize : PropTypes.number,
+		indicatorStyle : PropTypes.object,
+		backgroundStyle : PropTypes.object,
+		
+		//Animation
+		direction: PropTypes.string,
+		duration: PropTypes.number,
+		
+		//Elements
+		renderButton: PropTypes.element,
+		renderOptionItem: PropTypes.element,
 	};
 
-	selected = this.props.selected
+	/**
+	 * Default props as always
+	 */
+	static defaultProps = {
+	  defaultValue : 'Click To Select',
+	  onSelect  : () => {},
+		indicator : 'none',
+		indicatorColor: 'black',
+		indicatorSize: 10,
+		direction: 'fromBottom',
+		duration: 200,
+	};
+
+
+	/**
+	 * Settings state..
+	 */
+	state = {
+  	modalVisible: false, 
+	  selectedValue: this.props.defaultValue,
+	  selected: {},
+	};
+
+
+	/**
+	 * Animated libs
+	 */
   left = (this.props.direction == 'fromLeft')? new Animated.Value(-deviceWidth): null
   right = (this.props.direction == 'fromRight')? new Animated.Value(-deviceWidth): null
   top = (this.props.direction == 'fromTop')? new Animated.Value(-deviceHeight): null
   bottom = (this.props.direction == 'fromBottom')? new Animated.Value(-deviceHeight): null
 	
 
-	onSelect(label, value) {
-		this.props.onSelect(value)
-		this.setState({
-			modalVisible : false,
-			defaultText : label
+  /**
+   * Open select
+   */
+	openModal = e => {
+		this.setState({ modalVisible: true })
+		this._animateIn(this.props.direction)
+	}
+
+  /**
+   * Close select
+   */
+	closeModal = e => {
+		this._animateOut(this.props.direction)
+		setTimeout( () => this.setState({ modalVisible: false }), this.props.duration)
+	}
+
+	/**
+	 * Internal animation function to transition out
+	 * @param  {string} direction [Should be one of following: fromLeft, fromRight, fromTop, fromBottom]
+	 */
+	_animateIn(direction){
+		switch(direction){
+			case 'fromLeft': 
+				Animated.timing(this.left, {toValue: 0, duration: this.props.duration}).start()
+				break
+			case 'fromRight': 
+				Animated.timing(this.right, {toValue: 0, duration: this.props.duration}).start()
+				break
+			case 'fromTop': 
+				Animated.timing(this.top, {toValue: 0, duration: this.props.duration}).start()
+				break
+			case 'fromBottom': 
+				Animated.timing(this.bottom, {toValue: 0, duration: this.props.duration}).start()
+				break
+		}
+	}
+
+	/**
+	 * Internal animation function to transition in
+	 * @param  {string} direction [Should be one of following: fromLeft, fromRight, fromTop, fromBottom]
+	 */
+	_animateOut(direction){
+		return new Promise( (resolve, reject) => {
+			switch(direction){
+				case 'fromLeft': 
+					Animated.timing(this.left, {toValue: -deviceWidth, duration: this.props.duration}).start(resolve())
+					break
+				case 'fromRight': 
+					Animated.timing(this.right, {toValue: -deviceWidth, duration: this.props.duration}).start(resolve())
+					break
+				case 'fromTop': 
+					Animated.timing(this.top, {toValue: -deviceHeight, duration: this.props.duration}).start(resolve())
+					break
+				case 'fromBottom': 
+					Animated.timing(this.bottom, {toValue: -deviceHeight, duration: this.props.duration}).start(resolve())
+					break
+			}
 		})
 	}
 
-	openModal = e => {
-		this.setState({ modalVisible: true })
-		switch(this.props.direction){
-			case 'fromLeft': 
-				Animated.timing(this.left, {toValue: 0, duration: 200}).start()
-				break
-			case 'fromRight': 
-				Animated.timing(this.right, {toValue: 0}).start()
-				break
-			case 'fromTop': 
-				Animated.timing(this.top, {toValue: 0}).start()
-				break
-			case 'fromBottom': 
-				Animated.timing(this.bottom, {toValue: 0}).start()
-				break
-		}
+
+	/**
+	 * Option is pressed
+	 * @param  {integer} index [integer that defines what data[index] that has the option]
+	 */
+	_optionPress(index){
+		// Todo add multiple options
+
+		let pressedVal = this.props.data[index]
+		if (pressedVal.value !== undefined) 
+			this.setState({selectedValue: pressedVal.value})
+		this.setState({selected: pressedVal})
+		this.props.onSelect(pressedVal)
+		this.closeModal()
 	}
 
-	closeModal = e => {
-		switch(this.props.direction){
-			case 'fromLeft': 
-					Animated.timing(this.left, {toValue: -deviceWidth}).start()
-					setTimeout( () => this.setState({ modalVisible: false }), 500)
-				break
-			case 'fromRight': 
-				Animated.timing(this.right, {toValue: -deviceWidth}).start()
-					setTimeout( () => this.setState({ modalVisible: false }), 500)
-				break
-			case 'fromTop': 
-				Animated.timing(this.top, {toValue: -deviceHeight}).start()
-					setTimeout( () => this.setState({ modalVisible: false }), 500)
-				break
-			case 'fromBottom': 
-				Animated.timing(this.bottom, {toValue: -deviceHeight}).start()
-					setTimeout( () => this.setState({ modalVisible: false }), 500)
-				break
-		}
-	}
-
+	/**
+	 * Yet another render function
+	 */
 	render() {
-		let {style, defaultText, textStyle, backdropStyle,
-			optionListStyle, transparent, animationType,
-			indicator, indicatorColor, indicatorSize, indicatorStyle, 
-			selectedStyle, selected} = this.props
+		let {
+			backgroundStyle,
+			indicator, 
+			indicatorColor, 
+			indicatorSize, 
+			indicatorStyle 
+		} = this.props
+
+
+		let items = []
+		this.props.data.forEach( (item, index) => {
+			if (this.props.renderOptionItem){
+				items.push(
+					<TouchableWithoutFeedback onPress={e => this._optionPress(index)} key={index}>
+						{this.props.renderOptionItem(item, index)}
+					</TouchableWithoutFeedback>
+				)
+			}else{
+				items.push(
+					<TouchableWithoutFeedback onPress={e => this._optionPress(index)} key={index}>
+			      <View style={styles.optionItem} key={index}>
+			        <Text style={styles.optionText}>{item.value}</Text>
+			      </View>
+					</TouchableWithoutFeedback>
+		    )
+			}
+		})
+
+		let OptionList = React.cloneElement(
+			<ScrollView/>,
+			{
+				bounces: false,
+				automaticallyAdjustContentInsets: false,
+				style: [
+					{
+						height: 120,
+						width: 300,
+						borderWidth: 1,
+						borderColor: 'grey',
+						backgroundColor: 'white',
+					},
+					this.props.style
+				],
+			},
+			items
+		)
 
 		return (
 			<View>
 				<TouchableWithoutFeedback onPress={this.openModal}>
-				{
-					(this.props.renderButton)?
-					<View>
-						{this.props.renderButton(this.state.defaultText)}
-					</View>:
-					<View style = {[styles.selectBox, style]}>
-						<View style={styles.selectBoxContent}>
-							<Text style = {textStyle}>{this.state.defaultText}</Text>
-							<Indicator direction={indicator} color={indicatorColor} size={indicatorSize} style={indicatorStyle} />
+					{
+						(React.isValidElement(this.props.renderButton))?
+						<View>
+							{this.props.renderButton(this.state.selectedValue)}
+						</View>:
+						<View style = {[styles.selectBox]}>
+							<View style={styles.selectBoxContent}>
+								<Text>{this.state.selectedValue}</Text>
+							</View>
 						</View>
-					</View>
-				}
+					}
 				</TouchableWithoutFeedback>
 
 				<Modal
-          animationType={"none"}
+          animationType={'none'}
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={this.closeModal}
@@ -135,15 +227,10 @@ export default class Select extends Component {
 						bottom: this.bottom,
 					}]}>
 						<TouchableWithoutFeedback onPress={this.closeModal}>
-							<View style={[styles.modalOverlay, backdropStyle]}>
-								<OptionList
-								onSelect = {this.onSelect.bind(this)}
-								selectedStyle = {selectedStyle}
-								selected = {selected}
-								style = {[optionListStyle]}
-								>
-									{this.props.children}
-								</OptionList>
+							<View style={[styles.modalOverlay, backgroundStyle]}>
+								<View style={{height: 200}}>
+									{OptionList}
+								</View>
 							</View>
 						</TouchableWithoutFeedback>
 					</Animated.View>
@@ -153,35 +240,81 @@ export default class Select extends Component {
 		)
 	}
 
-	setSelectedText(text){
+	/**
+	 * Reset selected
+	 */
+	reset(){
 		this.setState({
-			defaultText: text
+			selectedValue: pressedVal.value,
+			selected: pressedVal,
 		})
+	}
+
+	/**
+	 * Return selected object to the user
+	 */
+	getSelected(){
+		return this.state.selected
+	}
+
+	/**
+	 * Return selected value string to the user
+	 */
+	getSelectedValue(){
+		return this.state.selectedValue
+	}
+
+	/**
+	 * Manually set the selected state
+	 * @param {object} object Object that the Select should have in memory
+	 * @param {val} string String that should be placed into the selected value box
+	 */
+	setSelected(object, val){
+		if (typeof object == Object) {
+			console.log('ReactNativeChooser: Please pass correct object .setSelected(object, value)')
+			return false
+		}
+		if (val.length == 0) {
+			console.log('ReactNativeChooser: Please pass correct value .setSelected(object, value)')
+			return false
+		}
+		this.setState({
+			selected: object,
+			selectedValue: val,
+		})
+		return true
 	}
 }
 
+
 var styles = StyleSheet.create({
-	selectBox : {
-		borderWidth : 1,
-		width  : 200,
-		padding : 10,
-		borderColor : "black"
+	selectBox:{
+		borderWidth: 1,
+		width: 200,
+		padding: 10,
+		borderColor : 'black'
 	},
-	selectBoxContent: {
+	selectBoxContent:{
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},
-	modalOverlay : {
+	modalOverlay:{
 		flex : 1,
-		justifyContent : "center",
-		alignItems : "center",
-		width: window.width,
-    height: window.height
+		justifyContent : 'center',
+		alignItems : 'center',
 	},
 	modal:{
 		position: 'absolute',
 		height: deviceHeight,
 		width: deviceWidth,
+	},
+
+	//OptionItems
+	optionItem:{
+		padding: 10,
+	},
+	optionText:{
+		fontSize: 14
 	}
 })
