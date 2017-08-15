@@ -10,11 +10,9 @@ React Native Chooser is simple, customizable and easy to use dropdown in React N
 npm i react-native-chooser --save
 ```
 
-##Usage
+## Usage
 
-
-```
-
+```js
 import React, { Component } from 'react';
 import {Select, Option} from "react-native-chooser";
 
@@ -57,13 +55,11 @@ export default class AwesomeProject extends Component {
     );
   }
 }
-
 ```
-
 
 ### Props
 
-### Props for Select
+#### Props for Select
 
 | Prop Name       | Data Type | Default Values  | Description                                      |
 |-----------------|-----------|-----------------|--------------------------------------------------|
@@ -82,26 +78,21 @@ export default class AwesomeProject extends Component {
 | selected        | string    | null            | Give it same value as you give to Option         |
 | selectedStyle   | object    | null            | Apply styles to the selected Option              |
 
-
-### Functions for Select
-
+#### Functions for Select
 
 | Function Name | Description |
 |-----------|-----------|
 | setSelectedText(text) | Set default text in the select option, often used to reset text.|
 
-### Props for Option
-
+#### Props for Option
 
 | Prop Name | Data Type | Default Values | Description                           |
 |-----------|-----------|----------------|---------------------------------------|
 | style     | object    | null           | To style each option                  |
 | styleText | object    | null           | To style the text shown in the option |
 
-
-
 ## Demo
-#####  IOS and Android:
+###  IOS and Android:
 <p align="center">
     <img src ="https://raw.githubusercontent.com/gs-akhan/react-native-select/master/dropdown-both.gif" />
 </p>
