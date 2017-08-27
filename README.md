@@ -5,6 +5,7 @@ Simple DropDown menu for React Native App! Your Select Tag for React Native. Ful
 
 React Native Chooser is simple, customizable and easy to use dropdown in React Native. It has been tested on both Android and IOS and works like a charm.
 
+
 ## Installation
 ```
 npm i react-native-chooser --save
@@ -25,8 +26,12 @@ import {
 
 export default class AwesomeProject extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {value : "Select Me Please"}
+  }
   onSelect(data) {
-    alert(data);
+    this.setState({value : data});
   }
 
   render() {
@@ -34,7 +39,7 @@ export default class AwesomeProject extends Component {
       <View style={styles.container}>
         <Select
             onSelect = {this.onSelect.bind(this)}
-            defaultText  = "Select Me Please"
+            defaultText  = {this.state.value}
             style = {{borderWidth : 1, borderColor : "green"}}
             textStyle = {{}}
             backdropStyle  = {{backgroundColor : "#d3d5d6"}}
