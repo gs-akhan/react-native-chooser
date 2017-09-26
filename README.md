@@ -30,8 +30,8 @@ export default class AwesomeProject extends Component {
     super(props);
     this.state = {value : "Select Me Please"}
   }
-  onSelect(data) {
-    this.setState({value : data});
+  onSelect(value, label) {
+    this.setState({value : value});
   }
 
   render() {
