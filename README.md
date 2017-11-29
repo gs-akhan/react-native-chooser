@@ -80,6 +80,7 @@ export default class AwesomeProject extends Component {
 | indicatorColor  | string    | "black"         | The color of the indicator arrow                 |
 | indicatorSize   | number    | 10              | The size of the indicator arrow                  |
 | indicatorStyle  | object    | null            | To style the indicator arrow                     |
+| indicatorIcon   | react element    | null     | Show the indicator icon                          |
 | selected        | string    | null            | Give it same value as you give to Option         |
 | selectedStyle   | object    | null            | Apply styles to the selected Option              |
 
