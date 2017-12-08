@@ -17,6 +17,7 @@ ___PLEASE NOTE: BREAKING CHANGES IN V2.___
 [Migration from v1 to v2 here](blob/v2/docs/MIGRATION.md)
 
 
+
 ## Installation
 ```
 npm i react-native-chooser --save
@@ -27,8 +28,12 @@ yarn add react-native-chooser
 ```
 
 ## Usage
+<<<<<<< HEAD
 ```
+=======
+>>>>>>> master
 
+```js
 import React, { Component } from 'react';
 import {Select, Option} from "react-native-chooser";
 
@@ -41,8 +46,12 @@ import {
 
 export default class AwesomeProject extends Component {
 
-  onSelect(data) {
-    alert(data);
+  constructor(props) {
+    super(props);
+    this.state = {value : "Select Me Please"}
+  }
+  onSelect(value, label) {
+    this.setState({value : value});
   }
 
   render() {
@@ -50,7 +59,7 @@ export default class AwesomeProject extends Component {
       <View style={styles.container}>
         <Select
             onSelect = {this.onSelect.bind(this)}
-            defaultText  = "Select Me Please"
+            defaultText  = {this.state.value}
             style = {{borderWidth : 1, borderColor : "green"}}
             textStyle = {{}}
             backdropStyle  = {{backgroundColor : "#d3d5d6"}}
@@ -71,13 +80,11 @@ export default class AwesomeProject extends Component {
     );
   }
 }
-
 ```
-
 
 ### Props
 
-### Props for Select
+#### Props for Select
 
 | Prop Name       | Data Type | Default Values  | Description                                      |
 |-----------------|-----------|-----------------|--------------------------------------------------|
@@ -93,29 +100,25 @@ export default class AwesomeProject extends Component {
 | indicatorColor  | string    | "black"         | The color of the indicator arrow                 |
 | indicatorSize   | number    | 10              | The size of the indicator arrow                  |
 | indicatorStyle  | object    | null            | To style the indicator arrow                     |
+| indicatorIcon   | react element    | null     | Show the indicator icon                          |
 | selected        | string    | null            | Give it same value as you give to Option         |
 | selectedStyle   | object    | null            | Apply styles to the selected Option              |
 
-
-### Functions for Select
-
+#### Functions for Select
 
 | Function Name | Description |
 |-----------|-----------|
 | setSelectedText(text) | Set default text in the select option, often used to reset text.|
 
-### Props for Option
-
+#### Props for Option
 
 | Prop Name | Data Type | Default Values | Description                           |
 |-----------|-----------|----------------|---------------------------------------|
 | style     | object    | null           | To style each option                  |
 | styleText | object    | null           | To style the text shown in the option |
 
-
-
 ## Demo
-#####  IOS and Android:
+###  IOS and Android:
 <p align="center">
     <img src ="https://raw.githubusercontent.com/gs-akhan/react-native-select/master/dropdown-both.gif" />
 </p>
