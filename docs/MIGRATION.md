@@ -1,6 +1,6 @@
 # React Native Chooser
 [![npm](https://img.shields.io/npm/dt/react-native-chooser.svg)]()
-[![npm](https://img.shields.io/npm/v/npm.svg)](aha)
+[![npm](https://img.shields.io/npm/v/npm.svg)]()
 [![Travis](https://img.shields.io/travis/gs-akhan/react-native-chooser.svg)]()
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
@@ -9,14 +9,6 @@ Simple yet fully customizable select menu for React Native.
 * **Customizable:** All elements can be changed to you what you need. Custom components can be added.
 * **Standards:** Everything is after React`s latest standards.
 * **iOS and Android:** Supports both platforms out of the box.
-
-___PLEASE NOTE: BREAKING CHANGES IN V2.___
-
-[Version 1 documentation here](blob/v2/docs/README_v1.md)
-
-[Migration from v1 to v2 here](blob/v2/docs/MIGRATION.md)
-
-
 
 ## Installation
 ```
@@ -28,12 +20,8 @@ yarn add react-native-chooser
 ```
 
 ## Usage
-<<<<<<< HEAD
 ```
-=======
->>>>>>> master
 
-```js
 import React, { Component } from 'react';
 import {Select, Option} from "react-native-chooser";
 
@@ -46,12 +34,8 @@ import {
 
 export default class AwesomeProject extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {value : "Select Me Please"}
-  }
-  onSelect(value, label) {
-    this.setState({value : value});
+  onSelect(data) {
+    alert(data);
   }
 
   render() {
@@ -59,7 +43,7 @@ export default class AwesomeProject extends Component {
       <View style={styles.container}>
         <Select
             onSelect = {this.onSelect.bind(this)}
-            defaultText  = {this.state.value}
+            defaultText  = "Select Me Please"
             style = {{borderWidth : 1, borderColor : "green"}}
             textStyle = {{}}
             backdropStyle  = {{backgroundColor : "#d3d5d6"}}
@@ -80,11 +64,13 @@ export default class AwesomeProject extends Component {
     );
   }
 }
+
 ```
+
 
 ### Props
 
-#### Props for Select
+### Props for Select
 
 | Prop Name       | Data Type | Default Values  | Description                                      |
 |-----------------|-----------|-----------------|--------------------------------------------------|
@@ -100,25 +86,29 @@ export default class AwesomeProject extends Component {
 | indicatorColor  | string    | "black"         | The color of the indicator arrow                 |
 | indicatorSize   | number    | 10              | The size of the indicator arrow                  |
 | indicatorStyle  | object    | null            | To style the indicator arrow                     |
-| indicatorIcon   | react element    | null     | Show the indicator icon                          |
 | selected        | string    | null            | Give it same value as you give to Option         |
 | selectedStyle   | object    | null            | Apply styles to the selected Option              |
 
-#### Functions for Select
+
+### Functions for Select
+
 
 | Function Name | Description |
 |-----------|-----------|
 | setSelectedText(text) | Set default text in the select option, often used to reset text.|
 
-#### Props for Option
+### Props for Option
+
 
 | Prop Name | Data Type | Default Values | Description                           |
 |-----------|-----------|----------------|---------------------------------------|
 | style     | object    | null           | To style each option                  |
 | styleText | object    | null           | To style the text shown in the option |
 
+
+
 ## Demo
-###  IOS and Android:
+#####  IOS and Android:
 <p align="center">
     <img src ="https://raw.githubusercontent.com/gs-akhan/react-native-select/master/dropdown-both.gif" />
 </p>
